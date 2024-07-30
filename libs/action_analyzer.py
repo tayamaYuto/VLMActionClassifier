@@ -4,27 +4,29 @@ import os
 
 def action_analyzer_prompt():
     prompt = """
-You have the ability to analyze player actions from soccer match footage.
-Watch the soccer match footage and analyze which of the actions listed below the player's actions correspond to.
+あなたはサッカーの試合映像からプレイヤーのアクションを分析する能力を持っています。
+サッカーの試合映像を見て、プレイヤーのアクションが以下のリストのどのアクションに該当するかを分析してください。
+もし、アクションが上記のいずれにも該当しない場合は、「その他」と出力してください。
+出力は単語のみです。
 
-The types of actions are as follows:
+アクションの種類は以下の通りです：
 
-1. Pass
-2. Shoot
-3. Cross
-4. Dribble
-5. Successful Tackle
-6. High Pass
-7. Header
-8. Others
+1. パス
+2. シュート
+3. クロス
+4. ドリブル
+5. 成功したタックル
+6. ロングパス
+7. ヘディング
+8. その他
 
-Please output the corresponding action. Refer to the following example for output format.
-===Example===
+該当するアクションを出力してください。出力形式の例は以下を参照してください。
+===例===
 <output>
-Shoot
-===End of Example===
+シュート
+===例の終わり===
 
-Let's begin!
+それでは始めましょう！
 <output>
 """
 
@@ -37,7 +39,7 @@ def get_response(img_path, prompt):
             {
                 "role": "user",
                 "content": prompt,
-                "content": [img_path]
+                "images": [img_path]
             }
         ]
     )
@@ -51,7 +53,7 @@ def get_img_path_list(img_folder):
 
 def main():
     #* 対象ファイルのパス取得
-    img_folder = "data/output/"
+    img_folder = "./data/output/720p/"
     img_path_list = get_img_path_list(img_folder)
 
     #* プロンプト設定
